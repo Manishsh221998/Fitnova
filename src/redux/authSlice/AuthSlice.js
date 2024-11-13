@@ -5,18 +5,26 @@ import { end_points } from "../../api/api_url"
 let api=end_points.user
 
 
+//Alldata thunk
+export const allData=createAsyncThunk("auth/allData", async ()=>{
+    const res=await axiosInstance.get(api)
+    console.log("All data :",res);
+    return res?.data
+})
+
 // Sign up thunk
-export const signUp=createAsyncThunk("auth/signUp",
-    async (userData)=>{
+export const signUp=createAsyncThunk("auth/signUp",async (userData)=>{
         const res=await axiosInstance.post(api,userData)
         console.log("axios res for sign up:",res);
+        let returnData={data:res?.data,status:res.status}
         return res;
     }
 )
 
 // Sign in thunk
-export const signIn=createAsyncThunk("auth/signIn", 
-    async ()=>{
+let id=sessionStorage.getItem("userId")
+console.log("----------",id)
+export const signIn=createAsyncThunk("auth/signIn",async ()=>{
         const res=await axiosInstance.get(api)
         console.log("axios res for sign in:",res);
         return res?.data
@@ -24,8 +32,7 @@ export const signIn=createAsyncThunk("auth/signIn",
 )
  
 // profile thunk
-export const profile=createAsyncThunk("auth/profile", 
-    async ()=>{
+export const profile=createAsyncThunk("auth/profile",async ()=>{
         const res=await axiosInstance.get(api)
         console.log("axios res for profile:",res);
         return res?.data
@@ -52,10 +59,10 @@ export const authSlice=createSlice({
          })
          builder.addCase(signUp.fulfilled,(state,action)=>{
             console.log("sign up,action for fulfilled state:",action)
-            if(action.status===200){
-                console.log('action.status',action.status)
+            if(action.payload.status===201){
+                console.log('action.status',action.payload.status)
             state.isLoading=false
-            state.userValue=action.payload
+            state.userValue=action.payload.data
             state.error=null
         }
          })
@@ -71,9 +78,9 @@ export const authSlice=createSlice({
          })
          builder.addCase(signIn.fulfilled,(state,action)=>{
             console.log("sign in,action for fulfilled state:",action)
-            if(action.status===200){
+            if(action.payload.status===200){
             state.isLoading=false
-            state.userValue=action.payload
+            state.userValue=action.payload.data
              state.error=null
         }
          })
@@ -89,9 +96,9 @@ export const authSlice=createSlice({
          })
          builder.addCase(profile.fulfilled,(state,action)=>{
             console.log("profile,action for fulfilled state:",action)
-            if(action.status===200){
+            if(action.payload.status===200){
             state.isLoading=false
-            state.userValue=action.payload
+            state.userValue=action.payload.data
             console.log("uservalue",state.userValue)
             state.error=null
         }
@@ -103,5 +110,5 @@ export const authSlice=createSlice({
     }
 })
 
-export default authSlice.reducer
+export default authSlice.reducer;
  

@@ -5,14 +5,13 @@ import { signUp } from "../../../redux/authSlice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../api/axiosInstance/axiosInstance";
 import { end_points } from "../../../api/api_url";
- import swAlert from "../../../swAlert/swAlert";
+import swAlert from "../../../swAlert/swAlert";
+import Header from "../../../layout/header/Header";
 const Registration = () => {
   let navigate = useNavigate();
   let api = end_points.user;
-  let [img, setImg] = useState("");
 
   let [userData, setData] = useState([]);
-
 
   const getData = () => {
     axiosInstance
@@ -21,22 +20,18 @@ const Registration = () => {
         console.log("axios res for user", res);
         if (res.status === 200) {
           setData(res?.data);
-          console.log("userData for signup -",userData);
+          console.log("userData for signup -", userData);
         }
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getData();
-  },[]);
+  }, []);
 
-  let getBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-    });
+ 
+  const [imageBase64, setImageBase64] = useState("");
+  const [file, setFile] = useState(null);
 
   const { isLoading, error, userValue } = useSelector((state) => {
     // console.log("State of sign up", state);
@@ -44,21 +39,24 @@ const Registration = () => {
   });
 
   let dispatch = useDispatch("");
-
-  const OnSubmit = (data) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setFile(file.name)
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageBase64(reader.result); // Store the base64 string
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+   const OnSubmit = (data) => {
     console.log("user form data for sign up", data, "Image", data.image[0]);
 
-    getBase64(data.image[0])
-      .then((res) => {
-        console.log("signup image url -", res, typeof res);
-        setImg(res);
-      })
-      .catch((err) => console.log("signup image url error", err));
 
-    let formData = {
-      ...data,
-      image:img,
-    };
+    console.log("image-------------", imageBase64);
+
+    let formData = { ...data, image: imageBase64 };
 
     const emailFound = userData.find((x) => x.email === data.email);
     if (!emailFound) {
@@ -66,11 +64,10 @@ const Registration = () => {
         .then((res) => {
           console.log(res);
           if (res.payload.status === 201) {
-          swAlert("success", "Sign up successfully", 1000);
-          navigate("/login");
-
+            swAlert("success", "Sign up successfully", 1000);
+            navigate("/login");
           } else {
-           }
+          }
         })
         .catch((err) => console.log("axios err", err));
     } else {
@@ -80,7 +77,8 @@ const Registration = () => {
 
   return (
     <>
-      <Form view={"signup"} OnSubmit={OnSubmit} />
+    <><Header/></>
+      <Form view={"signup"} OnSubmit={OnSubmit} handleImageChange={handleImageChange} filename={file}/>
     </>
   );
 };

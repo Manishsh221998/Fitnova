@@ -1,5 +1,7 @@
 import React from "react";
 import OurGoals from "../Goals/OurGoals";
+import Header from "../../../layout/header/Header";
+import { Container } from "@mui/material";
 
 const OurBrands = () => {
   const people = [
@@ -42,7 +44,9 @@ const OurBrands = () => {
     // More people...
   ];
   return (
-    <section>
+    <>
+    <Header/>
+    <Container>
     <div className="py-24 sm:py-32 rounded-xl p-4 bg-teal-50 ms-3 m-2 shadow-md">
       <div className="mx-auto grid max-w-7xl gap-20 px-6 lg:px-8 xl:grid-cols-3">
         <div className="max-w-xl">
@@ -81,7 +85,8 @@ const OurBrands = () => {
       </div>
      </div>
      <OurGoals/>
-     </section>
+     </Container>
+     </>
   );
 };
 

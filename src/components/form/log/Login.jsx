@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../../redux/authSlice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import swAlert from "../../../swAlert/swAlert";
+import Header from "../../../layout/header/Header";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -21,8 +22,8 @@ const Login = () => {
         setData(res?.payload);
         console.log("userData", userData);
 
-        let email_varify = userData.find((x) => x.email === data.email);
-        let password_varify = userData.find((x) => x.password === data.password);
+        let email_varify = res?.payload.find((x) => x.email === data.email);
+        let password_varify = res?.payload.find((x) => x.password === data.password);
 
         // console.log("Email & password", email_varify, password_varify);
 
@@ -33,19 +34,29 @@ const Login = () => {
         } else {
           swAlert("success", "Log in successfully", 400);
           navigate(`/profile/${email_varify.id}`);
+          // window.location.reload()
           window.sessionStorage.setItem("isLogged", "true");
           window.sessionStorage.setItem("proImg", email_varify.image);
           window.sessionStorage.setItem("firstName", email_varify.fname);
           window.sessionStorage.setItem("userId", email_varify.id);
 
           // window.sessionStorage.setItem("token",JSON.stringify(email_varify))
-          window.location.reload(true);
+          // window.location.reload(true);
         }
       })
       .catch((err) => console.log(err));
   };
 
-  return <Form view={"login"} OnSubmit={OnSubmit} />;
+  return (
+    <>
+    <Header/>
+  <Form view={"login"} OnSubmit={OnSubmit} >
+{isLoading && <p>isLoading</p>}
+{error && <p>error:{error}</p>}
+
+  </Form>
+  </>
+  )
 };
 
 export default Login;

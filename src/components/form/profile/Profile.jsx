@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { profile } from "../../../redux/authSlice/AuthSlice";
 import Card from "@mui/material/Card";
@@ -9,11 +9,11 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box, Container, Divider } from "@mui/material";
-import Profile_logout from "./profile_logout/Profile_logout";
-
+import Header from "../../../layout/header/Header";
+ 
 const Profile = () => {
-  const logout=Profile_logout
-  let { id } = useParams();
+   let { id } = useParams();
+   let navigate=useNavigate()
   console.log(id);
 
   let [data, setData] = useState({});
@@ -35,7 +35,13 @@ const Profile = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+  const logout=()=>{
+    navigate('/')
+    window.sessionStorage.clear()
+  }
   return (
+    <>
+    <Header/>
     <Box
       sx={{
         alignContent: "center",
@@ -43,9 +49,10 @@ const Profile = () => {
         display: "flex",
         justifyContent: "center",
         my:10,
+        margin:{xs:'20px'}
       }}
     >
-      <Card sx={{ maxWidth: 345,boxShadow:3 }}>
+      <Card sx={{ maxWidth: 345,boxShadow:3, }}>
         <CardMedia
           sx={{ height:250, width:300 }}
           image={data.image}
@@ -63,10 +70,11 @@ const Profile = () => {
         </CardContent>
         <CardActions>
           <Button size="small" >Edit</Button>
-          <Button size="small" onClick={()=>{ logout()}}>Log out</Button>
+          <Button size="small" onClick={logout}>Log out</Button>
         </CardActions>
       </Card>
     </Box>
+    </>
    );
 };
 

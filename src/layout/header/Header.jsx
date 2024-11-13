@@ -16,10 +16,20 @@ import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { createTheme, ThemeProvider, CssBaseline,Stack } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import FitbitIcon from '@mui/icons-material/Fitbit';let id=window.sessionStorage.getItem("userId")
-const pages = [{name:'Home',link:""},{name:'Products',link:""},{name:'Brands',link:"/brands"},{name:'About us',link:"/about"},{name:'Contact',link:""}];
+import FitbitIcon from '@mui/icons-material/Fitbit';
+import { useSelector } from 'react-redux';
+
+let id=window.sessionStorage.getItem("userId")
+let name=window.localStorage.getItem("name") //admin dashboard name
+!name?name="":name=name
+
+let link=window.localStorage.getItem("link") //admin dashboard link
+ 
+ const pages = [{name:'Home',link:"/"},{name:'Products',link:"/product"},{name:'Brands',link:"/brands"},{name:'About us',link:"/about"},{name:'Contact',link:"/contact"},{name:`${name}`,link:`${link}`}];
 const settings = [{name:'Login',link:"/login"},{name:'Profile',link:`/profile/${id}`},{name:'Dashboard',link:""},{name:'Logout',link:"/logout"}];
 const Header = () => {
+
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
   
@@ -61,9 +71,10 @@ let userId=window.sessionStorage.getItem("userId")
 // let parseData=JSON.parse(userData)
 // console.log("Data",parseData , parseData.fname)
 
-  return (
-    <AppBar position="static" 
-    sx={{background:'white',color:'black',borderBottomLeftRadius:16,borderBottomRightRadius:16}}
+   return (
+    <>
+  <AppBar position="static" 
+    sx={{background:'white',color:'black',borderBottomLeftRadius:16,borderBottomRightRadius:16,bgcolor:'black'}}
     >
     <Container maxWidth="xl" sx={{bgcolor:'#F3F8FF'}}>
       <Toolbar disableGutters>
@@ -80,12 +91,12 @@ let userId=window.sessionStorage.getItem("userId")
             fontFamily: 'monospace',
             fontWeight: 700,
             letterSpacing: '.2rem',
-            color: 'black',
-            textDecoration: 'none',
+            color:'tomato',
+             textDecoration: 'none',
           }}
         >
  <Link to='/'>
-          Fitnova
+          Fit<span style={{color:'turquoise'}}>nova</span>
           </Link>
         </Typography>
         
@@ -137,12 +148,14 @@ let userId=window.sessionStorage.getItem("userId")
             fontFamily: 'monospace',
             fontWeight: 700,
             letterSpacing: '.3rem',
-            color:'black',
+             color:'tomato',
             textDecoration: 'none',
+            fontSize:"24px",
+            fontSize:{xs:'0.7rem',sm:'22px'}
           }}
         >
         <Link to="/">
-        Fitnova
+        Fit<span style={{color:'turquoise'}}>nova</span>
         </Link>
         </Typography>
         
@@ -154,7 +167,7 @@ let userId=window.sessionStorage.getItem("userId")
             <Typography
                key={page.name}
               onClick={handleCloseNavMenu}
-              sx={{'&:hover':{color:'#00b5b7'}, color: 'black', display:'block',textDecoration:'none',fontSize:'18px',fontWeight:400,textTransform:'none'}}
+              sx={{'&:hover':{color:'#00b5b7'}, color: 'black', display:'block',textDecoration:'none',fontSize:'17px',fontWeight:400,textTransform:'none'}}
             >
               {page.name}
             </Typography>
@@ -164,14 +177,14 @@ let userId=window.sessionStorage.getItem("userId")
         </Box>
 {isLogged==="true"?
         <Box sx={{ flexGrow: 0 }}>
-          <Stack sx={{display:'inline-block', paddingRight:1,color:'#133E87',fontWeight:"medium"}}>Hi,{firstName} </Stack>
+          <Stack sx={{display:'inline-block', paddingRight:1,color:'#133E87',fontWeight:"medium", fontSize:{xs:'0.6rem',sm:'1rem',md:'1.12rem',lg:'1.13rem'}}}>Hi,{firstName} </Stack>
           <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src={proImg} />
+            <IconButton onClick={handleOpenUserMenu} sx={{ p:0 }}>
+              <Avatar alt="Remy Sharp" src={proImg} sx={{border:1,borderColor:'white',boxShadow:1,height:{xs:'24px',sm:'32px',lg:'48px'},width:{xs:'24px',sm:'32px',lg:'48px'}}} />
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: '45px' }}
+            sx={{ mt: '45px'}}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
@@ -191,12 +204,14 @@ let userId=window.sessionStorage.getItem("userId")
               <StyledLink to={setting.link}><>{setting.name}</></StyledLink>
               </MenuItem>
             ))}
+
           </Menu>
         </Box>:<Tooltip title="Login" arrow='down'><Link to='/login'><Button endIcon={<LoginIcon/>} sx={{textTransform:'capitalize',fontSize:'18px',fontWeight:'semi  bold', '&:hover':{color:'green'}}}>Login</Button></Link></Tooltip>
 }
       </Toolbar>
     </Container>
   </AppBar>
+  </>
   )
 }
 

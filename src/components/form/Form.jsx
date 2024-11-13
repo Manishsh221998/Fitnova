@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography, Container, Box} from "@mui/material";
-
+import { Button, TextField, Typography, Container, Box, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
-const Form = ({ view ,OnSubmit}) => {
-  // const [file, setFile] = useState(null);
+import Header from "../../layout/header/Header";
  
+const Form = ({ view, OnSubmit,handleImageChange,filename }) => {
+  // const [file, setFile] = useState(null);
+console.log("file-------------",filename)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
- 
 
-  return (
-    <Container component="main" maxWidth="xs">
+ 
+return (
+  <>
+     <Container component="main" maxWidth="xs">
       <Box
         sx={{
           my: 8,
@@ -23,22 +24,26 @@ const Form = ({ view ,OnSubmit}) => {
           flexDirection: "column",
           alignItems: "center",
           border: 0,
-          borderRadius: 3,
+          borderRadius:3,
+          borderTop:5,
+          borderTopColor:'turquoise',
           p: 5,
-          boxShadow: 3,
-          // backgroundImage:
-          //   "url(https://s3.images-iherb.com/blog/uploads/must-have-products-2022-large.jpg)",
+          boxShadow: 5,
+          backgroundImage:
+            "url(https://images.pond5.com/paper-texture-noise-animated-stop-footage-148295348_iconl.jpeg)",
+            background: 'linear-gradient(225deg, #ffffff, #FBFBFB )',
+          bgcolor: "AppWorkspace",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
-          {view === "login" ? "Log in" : "Sign up"}
+        <Typography component="h1" variant="h5" sx={{textTransform:'capitalize',color:'tomato'}}>
+         {view === "login" ? "Log in" : "Sign up"}
         </Typography>
         <Box component="form" sx={{ mt: 1 }} onSubmit={handleSubmit(OnSubmit)}>
           {view === "login" ? null : (
             <>
-               <TextField
+              <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -55,9 +60,8 @@ const Form = ({ view ,OnSubmit}) => {
                   },
                 })}
                 helperText={errors?.fname?.message}
-
               />
- 
+
               <TextField
                 margin="normal"
                 required
@@ -74,9 +78,7 @@ const Form = ({ view ,OnSubmit}) => {
                   },
                 })}
                 helperText={errors?.lname?.message}
-
               />
-              
             </>
           )}
           <TextField
@@ -96,9 +98,8 @@ const Form = ({ view ,OnSubmit}) => {
               },
             })}
             helperText={errors?.email?.message}
-
           />
-    
+
           <TextField
             margin="normal"
             required
@@ -118,9 +119,8 @@ const Form = ({ view ,OnSubmit}) => {
               maxLength: { value: 12, message: "maximum lenght 12 characters" },
             })}
             helperText={errors?.password?.message}
-
           />
-       
+
           {view === "login" ? null : (
             <>
               <input
@@ -129,24 +129,38 @@ const Form = ({ view ,OnSubmit}) => {
                 id="image"
                 type="file"
                 {...register("image")}
-                // onChange={(e) => {
-                //   setFile(e.target.files[0]);
-                // }}
+                 onChange={handleImageChange}
+
                 name="image"
-            
+
               />
               <label htmlFor="image">
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   component="span"
                   fullWidth
-                  sx={{ mt: 2 }}
+                  sx={{ mt:2,bgcolor:'Window',color:'turquoise',border:1,fontWeight:600 }}
                 >
-                  {/* {file ? file.name : "Choose File"} */}
-                  Choose File
+                  {filename ? filename :"Choose File"}
+                  
                 </Button>
               </label>
             </>
+            
+           
+            // <TextField
+            //   margin="normal"
+            //   required
+            //   fullWidth
+            //   type="file"
+            //   variant="standard"
+            //   accept="image/*"
+            //   id="image"
+            //   name="image"
+            //   {...register("image")}
+            //   onChange={handleImageChange}
+            // />
+            
           )}
           <Box
             sx={{
@@ -155,24 +169,27 @@ const Form = ({ view ,OnSubmit}) => {
               flexWrap: "wrap",
             }}
           >
-            <Button type="submit" variant="contained"  sx={{ mt: 3, mb: 2, px:'45px',bgcolor:'#00b5b7' }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2, px: "45px", bgcolor: "#00b5b7" }}
+            >
               {view === "login" ? "Login" : "Sign up"}
             </Button>
             {view === "login" ? (
               <Link to="/signup">
                 <Button
-                  variant='text'
+                  variant="text"
                   sx={{
                     // bgcolor: "white", // Custom background color
-                    // color: "black", // Custom text color
+                    color: "black", // Custom text color
                     mt: 3,
                     mb: 2,
-                    // "&:hover": {
-                    //   bgcolor: "", // Darker shade on hover
-                    //   color: "black",
-                    //    fontWeight: "500",
-                    //   },
-                  
+                    "&:hover": {
+                      bgcolor: "white", // Darker shade on hover
+                      color:'#1CD6CE',
+                       fontWeight: "500",
+                      },
                   }}
                 >
                   Create account
@@ -188,6 +205,7 @@ const Form = ({ view ,OnSubmit}) => {
         </Box>
       </Box>
     </Container>
+     </>
   );
 };
 
