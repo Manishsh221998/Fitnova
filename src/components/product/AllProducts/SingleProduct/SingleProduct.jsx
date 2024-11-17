@@ -41,6 +41,7 @@ const SingleProduct = () => {
 
   const handleAddtoCart=(id)=>{
     let userID=sessionStorage.getItem("userId")
+    console.log(userID)
     let cartData={
       uid: userID,
       product_id: singleProd?.id,
@@ -54,15 +55,18 @@ const SingleProduct = () => {
       // console.log("result",result);
       if(userID){   
   swAlert("success","Product added to cart successfully",700)
+  navigate('/cart')
       }
-      navigate('/cart')
+      else{
+        navigate("/login")
+      }
        })
        .catch((err)=>{
         console.log("something wrong",err);
        })
   }
   return (
-    <div>
+    <div >
       <Header />
       <Container
         maxWidth="lg"
@@ -120,13 +124,13 @@ const SingleProduct = () => {
               </Grid>
 
               <Grid item xs={6}>
-                <Typography variant="body1" color="primary" fontWeight="bold">
+                <Typography variant="h6" color="primary" fontWeight="bold">
                   ₹{singleProd.price}
                 </Typography>
               </Grid>
 
               <Grid item xs={6}>
-                <Typography variant="body2" color="error" fontWeight="bold">
+                <Typography variant="h6" color="#FF0000" fontWeight="bold">
                   {singleProd.discount}% off
                 </Typography>
               </Grid>
@@ -170,8 +174,8 @@ const SingleProduct = () => {
                   aria-controls="panel1-content"
                   id="panel1-header"
                 >
-                  Discription
-                </AccordionSummary>
+                  Description
+                 </AccordionSummary>
                 <AccordionDetails sx={{ bgcolor: "#FAFAF6" }}>
                   <Grid item xs={12}>
                     <Typography

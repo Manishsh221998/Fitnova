@@ -5,7 +5,7 @@ import { signIn } from "../../../redux/authSlice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import swAlert from "../../../swAlert/swAlert";
 import Header from "../../../layout/header/Header";
-
+ 
 const Login = () => {
   let navigate = useNavigate();
   let [userData, setData] = useState([]);
@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <>
     <Header/>
-  <Form view={"login"} OnSubmit={OnSubmit} >
+   <Form view={"login"} OnSubmit={OnSubmit} >
 {isLoading && <p>isLoading</p>}
 {error && <p>error:{error}</p>}
 

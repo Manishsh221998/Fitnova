@@ -13,8 +13,8 @@ export const allCartData=createAsyncThunk("cart/allCartData", async ()=>{
 })
 
 // Add cart thunk
-export const addCart=createAsyncThunk("cart/addCart",async (userData)=>{
-        const res=await axiosInstance.post(api,userData)
+export const addCart=createAsyncThunk("cart/addCart",async (cartData)=>{
+        const res=await axiosInstance.post(api,cartData)
         console.log("axios res for sign up:",res);
         let returnData={data:res?.data,status:res.status}
         return res;

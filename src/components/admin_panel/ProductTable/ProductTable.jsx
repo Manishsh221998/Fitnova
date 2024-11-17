@@ -20,6 +20,7 @@ import {
   Avatar,
   Container,
   Stack,
+  Tooltip,
 } from "@mui/material";
 import { Add, Edit, Delete, Visibility } from "@mui/icons-material";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
@@ -32,6 +33,8 @@ import Header from "../../../layout/header/Header";
 //-------------------Modal------------------------
 import Modal from '@mui/material/Modal';
 import Edit_product from "../Edit_product/Edit_product";
+
+import LogoutIcon from '@mui/icons-material/Logout';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -126,8 +129,9 @@ let found = state.find((x) => x.id == id);
   };
  
   return (
+    <>
+        <Header/>
     <Container>
-    <Header/>
     <Box sx={{ flexGrow: 1, padding: 2, marginX: 5, marginY:5 }}>
       {/* AppBar with Search and Add */}
       <AppBar position="static" color="light" sx={{ borderRadius: 3 }}>
@@ -153,6 +157,7 @@ let found = state.find((x) => x.id == id);
               variant="contained"
               color="info"
               sx={{
+                fontFamily:'unset',
                 marginY: { xs: "10px" },
                 fontSize: { xs: "8px", sm: "12px", md: "14px", lg: "16px" },
               }}
@@ -182,19 +187,33 @@ let found = state.find((x) => x.id == id);
             </TableRow>
           </TableHead>
           <TableBody>
-            {state?.filter((x)=>{
-              if(searchText===""){
-                return x;
-              }
-              else if((x?.brand.toLowerCase().includes(searchText.toLowerCase()))||
-            (x?.product_name.toLowerCase().includes(searchText.toLowerCase()))||
-            (x?.product_category.toLowerCase().includes(searchText.toLowerCase()))||
-            (x?.Weight.toLowerCase().includes(searchText.toLowerCase()))||
-            (x?.price.toLowerCase().includes(searchText.toLowerCase()))
-          ){
-                return x;
-              }
-            }).map((data,idx) => (
+            {
+          //   state?.filter((x)=>{
+          //     if(searchText===""){
+          //       return x;
+          //     }
+          //     else if((x?.brand.toLowerCase().includes(searchText.toLowerCase()))||
+          //   (x?.product_name.toLowerCase().includes(searchText.toLowerCase()))||
+          //   (x?.product_category.toLowerCase().includes(searchText.toLowerCase()))||
+          //   (x?.Weight.toLowerCase().includes(searchText.toLowerCase()))||
+          //   (x?.price.toLowerCase().includes(searchText.toLowerCase()))
+          // ){
+          //       return x;
+          //     }
+          //   })
+            
+           state?.filter((x)=>{
+            if(searchText===''){
+              return x
+            }
+            else if((x?.brand.toLowerCase().includes(searchText.toLowerCase()))||
+           (x.product_category.toLowerCase().includes(searchText.toLowerCase()))||
+           (x.price.toLowerCase().includes(searchText.toLowerCase()))||
+           (x.weight.toLowerCase().includes(searchText.toLowerCase()))
+            ){
+              return x
+            }
+           }).map((data,idx) => (
               <TableRow key={data.id}>
                <TableCell sx={{color:'grey',paddingLeft:'2rem'}}>{idx+1}</TableCell>
                 <TableCell>
@@ -225,9 +244,9 @@ let found = state.find((x) => x.id == id);
                 </TableCell>
                 <TableCell align="center">
                   {/* -----------------------View Single product in Modal----------------------- */}
-                  <IconButton sx={{color:"#6EACDA" }} aria-label="view" >
+                  <Tooltip title='View'><IconButton sx={{color:"#6EACDA" }} aria-label="view" >
                     <Visibility onClick={() => handleView(data?.id)}/>
-                  </IconButton>
+                  </IconButton></Tooltip>
                   <Modal
                           open={open}
                           onClose={handleClose}
@@ -418,11 +437,12 @@ let found = state.find((x) => x.id == id);
                   </Modal>
           {/* ------------------------------------------------------------------------------------ */}
 
-                  <IconButton sx={{color:"#A7D129" }} aria-label="edit" >
+                 <Tooltip title='Edit'><IconButton sx={{color:"#A7D129" }} aria-label="edit" >
                   <Edit 
                     onClick={()=>{handleEdit(data.id)}}  
                     />  
                   </IconButton>
+                  </Tooltip> 
           {/* ------------------------------------------Edit modal-------------------------------------- */}
                   <Modal
               open={openeditproduct}
@@ -459,20 +479,25 @@ let found = state.find((x) => x.id == id);
             </Modal>
           {/* ------------------------------------------------------------------------------------------- */}
 
-                  <IconButton sx={{color:"#FF0000" }} aria-label="delete" 
+          <Tooltip title="Delete"> <IconButton sx={{color:"#FF0000" }} aria-label="delete" 
                   onClick={()=>{deleteItem(data.id)}}
                   >
                     <Delete />
+                    
                   </IconButton>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <Button onClick={adminLogout}>Log out</Button>
+      <Box sx={{display:'flex',justifyContent:'right'}}>
+      <Tooltip title="Log out"> <IconButton onClick={adminLogout} ><LogoutIcon/></IconButton></Tooltip>
+      </Box>
     </Box>
     </Container>
+    </>
   );
 }
 

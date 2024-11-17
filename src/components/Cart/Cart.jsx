@@ -105,7 +105,7 @@ function Cart() {
   return (
     <>
       <Header />
-      <Container maxWidth="xl" sx={{ paddingY: 10 }}>
+      <Container maxWidth="xl" sx={{ paddingY:2 }}>
         <Box
           sx={{
             display: "flex",
@@ -126,6 +126,7 @@ function Cart() {
             <Typography variant="h4" sx={{ fontWeight: "bold", mb: 3 }}>
               Your Cart
             </Typography>
+            <Divider sx={{marginBottom:"12px"}}/>
 
             {cartItems?.map((item) => (
               <Box
@@ -137,7 +138,7 @@ function Cart() {
                   alt={item.product_name}
                   sx={{ width: 50, height: 50, marginRight: 2 }}
                 />
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1 ,textAlign:'start'}}>
                   <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                     {item.product_name}
                   </Typography>
@@ -163,7 +164,7 @@ function Cart() {
                   </IconButton>
                 </Box>
                 <IconButton onClick={() => handleRemoveItem(item.id)}>
-                  <DeleteOutlineIcon />
+                  <DeleteOutlineIcon sx={{color:'black','&:hover':{color:'red'}}} />
                 </IconButton>
               </Box>
             ))}
@@ -202,7 +203,7 @@ function Cart() {
               color="primary"
               fullWidth
               sx={{ mt: 2, textTransform: "none" }}
-              style={{ backgroundColor: "#000", color: "#91ff00" }}
+              style={{ backgroundColor:'#D2E603', color: "white",fontWeight:'bold' }}
             >
               Checkout
             </Button>

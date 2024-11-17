@@ -19,11 +19,13 @@ import Product from "../components/product/Product"
 import SingleProduct from "../components/product/AllProducts/SingleProduct/SingleProduct"
 import Marquee from "react-fast-marquee"
 import Cart from "../components/Cart/Cart"
-
-
+import { Box } from "@mui/material"
+import CelebrationIcon from '@mui/icons-material/Celebration';
+import {ProtectedRouteForAdmin, ProtectedRoutes} from "../protectedRoute/ProtectedRouting"
+import ErrorPage from "../protectedRoute/errorPage/ErrorPage"
+ 
 const Routing = () => {
-   let isAdminLogged = window.localStorage.getItem("isAdminLogged")
-   console.log(isAdminLogged);
+  
 
    return (
       <Router>
@@ -41,30 +43,39 @@ const Routing = () => {
             <Route path="product/singleProduct/:id" element={<SingleProduct />} />
 
            {/* Cart paths */}
-            <Route path="cart" element={<Cart />} />
 
             {/* Authentication paths */}
             <Route path="signup" element={<Registration />} />
             <Route path="login" element={<Login />} />
-            <Route path="logout" element={<Profile_logout />} />
+            <Route path="/logout" element={<Profile_logout />} />
+
+            {/* protect routes */}
+            <Route element={<ProtectedRoutes/>}>
             <Route path="profile/:id" element={<Profile />} />
+            <Route path="cart" element={<Cart />} />
+            </Route>
+
+            <Route path="error" element={<ErrorPage />} />
 
             {/* Admin Login */}
-            <Route path="admin_login" element={<Admin_login />} />
+            <Route path="admin_login" element={<Admin_login/>} />
             {/* Admin panel */}
-            <Route path="producttable" element={<ProductTable />} />
+            
+             {/* protect routes */}
+            <Route element={<ProtectedRouteForAdmin/>}>
             {/* Inventory */}
+            <Route path="producttable" element={<ProductTable />} />
             <Route path="addProduct" element={<Add_product />} />
             <Route path="updateProduct" element={<Edit_product />} />
-
+            </Route>
             {/* Page not found */}
             <Route path="*" element={<Page_not_found />} />
          </Routes>
          <Footer4 />
          <Marquee direction="left" speed='50' gradient="black green" >
-  50% discount on your Fitnova health products! Don’t miss out on this exclusive offer!
-   </Marquee>
-      </Router>
+         <Box sx={{color:'teal'}}>50% discount on your Fitnova health products! Don’t miss out on this exclusive offer!</Box>
+      </Marquee>
+       </Router>
    )
 }
 export default Routing

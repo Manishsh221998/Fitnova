@@ -18,7 +18,7 @@ import { createTheme, ThemeProvider, CssBaseline,Stack } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import FitbitIcon from '@mui/icons-material/Fitbit';
 import { useSelector } from 'react-redux';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 let id=window.sessionStorage.getItem("userId")
 let name=window.localStorage.getItem("name") //admin dashboard name
 !name?name="":name=name
@@ -26,7 +26,7 @@ let name=window.localStorage.getItem("name") //admin dashboard name
 let link=window.localStorage.getItem("link") //admin dashboard link
  
  const pages = [{name:'Home',link:"/"},{name:'Products',link:"/product"},{name:'Brands',link:"/brands"},{name:'About us',link:"/about"},{name:'Contact',link:"/contact"},{name:`${name}`,link:`${link}`}];
-const settings = [{name:'Login',link:"/login"},{name:'Profile',link:`/profile/${id}`},{name:'Dashboard',link:""},{name:'Logout',link:"/logout"}];
+const settings = [{name:'Profile',link:`/profile/${id}`},{name:'Cart',link:"/cart"},{name:'Logout',link:"/logout"}];
 const Header = () => {
 
 
@@ -175,6 +175,7 @@ let userId=window.sessionStorage.getItem("userId")
             </StyledLink>
           ))}
         </Box>
+<Link to='/cart'><ShoppingCartIcon sx={{fontSize:'21px',color:'#FF5200',marginRight:'0.3rem',bottom:1}}/></Link>
 {isLogged==="true"?
         <Box sx={{ flexGrow: 0 }}>
           <Stack sx={{display:'inline-block', paddingRight:1,color:'#133E87',fontWeight:"medium", fontSize:{xs:'0.6rem',sm:'1rem',md:'1.12rem',lg:'1.13rem'}}}>Hi,{firstName} </Stack>
@@ -199,14 +200,14 @@ let userId=window.sessionStorage.getItem("userId")
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settings.map((setting) => (
+             {settings.map((setting) => (
               <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
               <StyledLink to={setting.link}><>{setting.name}</></StyledLink>
               </MenuItem>
             ))}
 
           </Menu>
-        </Box>:<Tooltip title="Login" arrow='down'><Link to='/login'><Button endIcon={<LoginIcon/>} sx={{textTransform:'capitalize',fontSize:'18px',fontWeight:'semi  bold', '&:hover':{color:'green'}}}>Login</Button></Link></Tooltip>
+        </Box>:<Tooltip title="Login" arrow='down'><Link to='/login'><Button endIcon={<LoginIcon/>} sx={{textTransform:'capitalize',fontSize:'16px',fontWeight:'semibold', color:'#32E0C4', '&:hover':{color:'green'}}}>Login</Button></Link></Tooltip>
 }
       </Toolbar>
     </Container>

@@ -1,7 +1,8 @@
 import React from "react";
 import OurGoals from "../Goals/OurGoals";
 import Header from "../../../layout/header/Header";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
+import FitnovaAccordion from "../../home/FitnovaAccordian/FitnovaAccordian";
 
 const OurBrands = () => {
   const people = [
@@ -45,6 +46,7 @@ const OurBrands = () => {
   ];
   return (
     <>
+    <Box sx={{backgroundImage:'url(https://images.pond5.com/paper-texture-noise-animated-stop-footage-148295348_iconl.jpeg)',borderRadius:6}}>
     <Header/>
     <Container>
     <div className="py-24 sm:py-32 rounded-xl p-4 bg-teal-50 ms-3 m-2 shadow-md">
@@ -86,6 +88,9 @@ const OurBrands = () => {
      </div>
      <OurGoals/>
      </Container>
+     <FitnovaAccordion/>
+
+     </Box>
      </>
   );
 };

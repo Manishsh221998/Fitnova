@@ -5,23 +5,25 @@ import Bestsellers from './BestSeller/Bestsellers'
 import FeatureSection from './FeatureSection/FeatureSection'
 import DealsSection from './DealsSection/DealsSection'
 import BannerImage from './Banner/BannerImage'
-import { Container } from '@mui/material'
+import { Box, Container, Divider } from '@mui/material'
 import Marquee from 'react-fast-marquee'
- 
-const Home = () => {
+import CelebrationIcon from '@mui/icons-material/Celebration';
+ const Home = () => {
   return (
 <>
 <Header/>
 <CarouselSlides/>
 <Marquee direction="left" speed='50' gradient="black green" >
-  50% discount on your Fitnova health products! Don’t miss out on this exclusive offer!
+ <Box sx={{color:'yellowgreen',paddingRight:1}}>50% discount </Box> on your <Box sx={{color:'turquoise',paddingX:1}}>Fitnova health products!</Box> Don’t miss out on this exclusive <Box sx={{color:'gold',fontWeight:500,paddingX:1}}>OFFER!</Box><CelebrationIcon sx={{color:'#F7FD04',fontSize:'1.3rem',paddingBottom:"2px"}}/>
    </Marquee>
     <Container> 
         <FeatureSection/>
         <DealsSection/>
        <Bestsellers/>
         <BannerImage/>
+ 
     </Container>
+
     </>
   )
 }
