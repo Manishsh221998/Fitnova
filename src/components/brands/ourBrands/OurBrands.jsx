@@ -87,8 +87,8 @@ const OurBrands = () => {
       </div>
      </div>
      <OurGoals/>
+
      </Container>
-     <FitnovaAccordion/>
 
      </Box>
      </>

@@ -23,6 +23,8 @@ import { useNavigate } from "react-router-dom";
 import FitbitIcon from "@mui/icons-material/Fitbit";
 
 const Footer4 = () => {
+  let userId=window.sessionStorage.getItem("userId")
+  // console.log("-----",userId)
   //-------------------Modal----------------------------
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -244,52 +246,40 @@ const Footer4 = () => {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <a
-                    href="/login"
-                    className="text-gray-700 transition hover:opacity-75 hover:text-[#2c8e93]"
-                  >
-                    {" "}
-                    1on1 Coaching{" "}
+                 <a href="/"  className="text-gray-700 transition hover:opacity-65"
+                 >
+                    Secure Payment
                   </a>
                 </li>
 
                 <li>
                   <a
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    href="/"
+                    className="text-gray-700 transition hover:opacity-65"
                   >
                     {" "}
-                    Company Review{" "}
+                    Free Shipping & Returns
                   </a>
                 </li>
 
                 <li>
                   <a
-                    href="#"
+                    href="/"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
-                    Accounts Review{" "}
+                    24/7 Customer Support
                   </a>
                 </li>
+ 
 
                 <li>
                   <a
-                    href="#"
+                    href="/"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
-                    HR Consulting{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75"
-                  >
-                    {" "}
-                    SEO Optimisation{" "}
+                    Money Back Guarantee{" "}
                   </a>
                 </li>
               </ul>
@@ -301,7 +291,7 @@ const Footer4 = () => {
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
                   <a
-                    href="#"
+                    href="/about"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
@@ -311,7 +301,7 @@ const Footer4 = () => {
 
                 <li>
                   <a
-                    href="#"
+                    href="/about"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
@@ -324,8 +314,15 @@ const Footer4 = () => {
                     href="#"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    {" "}
-                    Accounts Review{" "}
+                     Authenticity 
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-700 transition hover:opacity-75"
+                  >
+                     Brand Directory 
                   </a>
                 </li>
               </ul>
@@ -336,8 +333,19 @@ const Footer4 = () => {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
+                
+                <a
+                href="/login"
+                 className="text-gray-700 transition hover:opacity-75"
+               >
+                 {" "}
+                 My Account{" "}
+               </a> 
+                </li>
+
+                <li>
                   <a
-                    href="#"
+                    href="/contact"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
@@ -351,17 +359,16 @@ const Footer4 = () => {
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
-                    FAQs{" "}
+                    FAQ{" "}
                   </a>
                 </li>
-
                 <li>
                   <a
                     href="#"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
-                    Live Chat{" "}
+                    Terms & conditions{" "}
                   </a>
                 </li>
               </ul>
@@ -521,8 +528,8 @@ const Footer4 = () => {
           </div>
         </div>
 
-        <p className="text-xs text-gray-500">
-          &copy; 2022. Company Name. All rights reserved.
+        <p className="text-xs text-gray-500 hover:text-teal-500">
+          &copy; 2024 Fitnova. All rights reserved.
         </p>
       </div>
     </footer>

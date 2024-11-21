@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../../../redux/productSlice/ProductSlice";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import SortIcon from '@mui/icons-material/Sort';
 import {
   Button,
   Card,
@@ -16,150 +17,169 @@ import {
   IconButton,
   Typography,
   Tooltip,
+  FormControl,
+  Select,
+  MenuItem,
+  Box,
 } from "@mui/material";
-import ProductCategoryDrawer from "./ProductCategory/ProductCategoryDrawer";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { addCart } from "../../../redux/cartSlice/CartSlice";
-import swAlert from "../../../swAlert/swAlert";
+import { Link } from "react-router-dom";
 
-const Allproduct = () => {
-  let navigate = useNavigate();
-  const [page, setPage] = React.useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
-  let [data, setData] = useState([]);
-  const { isLoading, error } = useSelector((state) => state.product);
-  let dispatch = useDispatch();
+const AllProduct = () => {
+  const [page, setPage] = useState(1);
+  const [data, setData] = useState([]); // Original product data
+  const [filteredData, setFilteredData] = useState([]); // Filtered and sorted data
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [sortType, setSortType] = useState("");
+  const itemsPerPage = 12;
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getProduct())
       .then((res) => {
-        console.log("axios res for All product", res?.payload);
-        setData(res?.payload);
+        const products = res?.payload || [];
+        setData(products);
+        setFilteredData(products);
+
+        // Extract unique categories
+        const uniqueCategories = [
+          ...new Set(products.map((product) => product?.product_category)),
+        ];
+        setCategories(uniqueCategories);
       })
-      .catch((err) => console.log("axios error for all product", err));
-  }, [setData, dispatch]);
+      .catch((err) => console.error("Error fetching products:", err));
+  }, [dispatch]);
 
-  let [singleData, setSingleData] = useState({});
+  useEffect(() => {
+    setPage(1); // Reset to the first page on any data change
+  }, [filteredData]);
 
-  // const handleAddToCart = (id) => {
-  //   setSingleData(data.find((x) => x.id === id));
-  //   let userId = window.sessionStorage.getItem("userId");
-  //   let cartData = {
-  //     uid: userId,
-  //     product_id: singleData?.id,
-  //     product_name: singleData?.brand,
-  //     price: singleData?.price,
-  //     qty: 1,
-  //     product_img: singleData?.prodImage,
-  //   };
-  //   console.log(cartData);
+  // Filter by category
+  const handleCategoryChange = (event) => {
+    const category = event.target.value;
+    setSelectedCategory(category);
 
-  //   dispatch(addCart(cartData))
-  //     .then((res) => {
-  //       console.log(res);
-  //       if (userId) {
-  //         swAlert("success", "Product added to cart", 400);
-  //         navigate("/cart");
-  //       } else {
-  //         swAlert("error", "You have to login in first", 500);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+    const filtered = category
+      ? data.filter((product) => product?.product_category === category)
+      : data;
+
+    setFilteredData(filtered);
+  };
+
+  // Sort products
+  const handleSortChange = (event) => {
+    const type = event.target.value;
+    setSortType(type);
+
+    const sorted = [...filteredData];
+    if (type === "name") {
+      sorted.sort((a, b) => a.product_name.localeCompare(b.product_name));
+    } else if (type === "priceLowToHigh") {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (type === "priceHighToLow") {
+      sorted.sort((a, b) => b.price - a.price);
+    }
+    setFilteredData(sorted);
+  };
+
+  // Handle page change
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  // Paginate data
+  const paginatedData = filteredData.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
 
   return (
-    <>
-      <ProductCategoryDrawer />
-      <Container maxWidth="lg">
-        {/* <Typography variant="h4">Special Offers For You</Typography> */}
-        <Grid container spacing={2}>
-          {data.map((value, index) => (
+    <Container maxWidth="lg">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: 4,
+        }}
+      >
+        <FormControl sx={{ minWidth: 150 }} size="small">
+          <Select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            displayEmpty
+            sx={{borderRadius:5}}
+          >
+            <MenuItem value="">
+              <em>All Categories</em>
+            </MenuItem>
+            {categories.map((category, index) => (
+              <MenuItem key={index} value={category}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ minWidth: 150 }} size="small" >
+
+          <Select  value={sortType} onChange={handleSortChange} displayEmpty sx={{borderRadius:5}}
+             > 
+         
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="name">Name</MenuItem>
+            <MenuItem value="priceLowToHigh">Price: Low to High</MenuItem>
+            <MenuItem value="priceHighToLow">Price: High to Low</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
+      {paginatedData.length > 0 ? (
+        <Grid container spacing={2} marginTop={2}>
+          {paginatedData.map((product, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <Card
                 sx={{ p: 1, boxShadow: 1, m: 1, "&:hover": { boxShadow: 5 } }}
               >
                 <CardMedia
                   component="img"
-                  height="25"
-                  image={value.prodImage}
-                  alt={value.brand}
+                  height="140"
+                  image={product.prodImage}
+                  alt={product.brand}
                   sx={{
-                    padding: 5,
                     transition: "transform 0.3s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
+                    "&:hover": { transform: "scale(1.1)" },
+                    p:4
                   }}
                 />
                 <Divider />
                 <CardContent sx={{ textAlign: "start" }}>
+                  <Typography sx={{fontSize:'1.2rem'}}>{product.brand}</Typography>
                   <Typography
-                    variant="h6"
-                    sx={{ textWrap: "wrap", fontSize: "1.2rem" }}
+                    sx={{ fontSize: "0.9rem", color: "GrayText" }}
                   >
-                    {value.brand}
+                    ({product.product_name})
                   </Typography>
                   <Typography
-                    sx={{
-                      fontSize: "0.9rem",
-                      color: "GrayText",
-                      marginBottom: "0.3rem",
-                    }}
+                    sx={{ color: "#23120B", fontWeight: 600 }}
                   >
-                    ({value.product_name})
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      color: "#23120B",
-                      fontSize: "1.1rem",
-                      fontWeight: "600",
-                    }}
-                  >
-                    {value.price} ₹
-                    <span
-                      style={{
-                        color: "tomato",
-                        fontSize: "0.9rem",
-                        fontWeight: "medium",
-                        paddingLeft: "0.6rem",
-                      }}
-                    >
-                      {value?.discount}% off
+                    ₹{product.price}{" "}
+                    <span style={{ color: "tomato", fontSize: "0.9rem" }}>
+                      {product?.discount}% off
                     </span>
                   </Typography>
-
-                  <Typography
-                    sx={{
-                      fontSize: "10px",
-                      fontWeight: 500,
-                      color: "rgb(0, 168, 86)",
-                    }}
-                  >
-                    Inclusive of all taxes
-                  </Typography>
                 </CardContent>
-
-                <CardActions
-                  sx={{ justifyContent: "space-between", paddingX: "0.8rem" }}
-                >
-                  <Link to={`singleProduct/${value.id}`}>
-                    <Button
-                      variant="outlined"
-                      color="warning"
-                      sx={{ color: "tomato", textTransform: "none" }}
-                    >
-                      View more
+                <CardActions sx={{ justifyContent: "space-between" }}>
+                  <Link to={`singleProduct/${product.id}`}>
+                    <Button variant="outlined" color="warning">
+                      View More
                     </Button>
                   </Link>
-                  <Tooltip title="Add to Cart" arrow placement="bottom-start">
-                    <IconButton
-                      variant="standard"
-                      sx={{ color: "turquoise" }}
-                      // onClick={() => handleAddToCart(value?.id)}
-                    >
+                  <Tooltip title="Add to Cart">
+                    <IconButton>
                       <ShoppingCartIcon sx={{ color: "turquoise" }} />
                     </IconButton>
                   </Tooltip>
@@ -168,12 +188,26 @@ const Allproduct = () => {
             </Grid>
           ))}
         </Grid>
-        <Stack spacing={2} alignItems="center" paddingY="1rem">
-          <Pagination count={10} page={page} onChange={handleChange} />
-        </Stack>
-      </Container>
-    </>
+      ) : (
+        <Typography
+          variant="h6"
+          color="textSecondary"
+          align="center"
+          marginTop={4}
+        >
+          No products found.
+        </Typography>
+      )}
+
+      <Stack spacing={2} alignItems="center" marginY={4}>
+        <Pagination
+          count={Math.ceil(filteredData.length / itemsPerPage)}
+          page={page}
+          onChange={handlePageChange}
+        />
+      </Stack>
+    </Container>
   );
 };
 
-export default Allproduct;
+export default AllProduct;

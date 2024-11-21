@@ -8,7 +8,9 @@ import BannerImage from './Banner/BannerImage'
 import { Box, Container, Divider } from '@mui/material'
 import Marquee from 'react-fast-marquee'
 import CelebrationIcon from '@mui/icons-material/Celebration';
- const Home = () => {
+import FastSelling from './FastSelling/FastSelling'
+import PromoCards from './PromoCard/PromoCards'
+  const Home = () => {
   return (
 <>
 <Header/>
@@ -19,12 +21,12 @@ import CelebrationIcon from '@mui/icons-material/Celebration';
     <Container> 
         <FeatureSection/>
         <DealsSection/>
+<PromoCards/>
+      <FastSelling/>
        <Bestsellers/>
         <BannerImage/>
- 
     </Container>
-
-    </>
+     </>
   )
 }
 

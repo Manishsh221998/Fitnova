@@ -12,8 +12,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const FitnovaAccordion = () => {
   return (
-    <Box Box sx={{paddingX:1}}>
-         <Typography variant="h5" sx={{textAlign:'start',my:"8px",color:'#007F73',fontFamily:'inherit'}}>More Details about Health, Nutrition & Body Building Supplements   <Divider/></Typography>
+    <Box Box sx={{paddingX:1,my:'3rem'}}>
+         <Typography variant="h5" sx={{textAlign:'start',my:"10px",color:'#007F73',fontFamily:'inherit'}}>More Details about Health, Nutrition & Body Building Supplements   <Divider/></Typography>
      
       <Accordion sx={{textAlign:'start'}}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>

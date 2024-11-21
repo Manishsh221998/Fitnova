@@ -17,8 +17,10 @@ const OurGoals = () => {
     <div className="relative isolate overflow-hidden bg-white py-24 sm:py-32 rounded-xl m-2 shadow-sm">
       <img
         alt=""
-        src="https://img.freepik.com/free-photo/cosmetics-products-with-space-text-white-background_23-2147818092.jpg?t=st=1730539080~exp=1730542680~hmac=040ee02bdf0be2e477ff903dc290a78a4a4079c835c40dde9668ada2ec551456&w=1380"
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
+          src="https://img.freepik.com/free-photo/cosmetics-products-with-space-text-white-background_23-2147818092.jpg?t=st=1730539080~exp=1730542680~hmac=040ee02bdf0be2e477ff903dc290a78a4a4079c835c40dde9668ada2ec551456&w=1380"
+          // src="https://img.freepik.com/free-psd/3d-illustration-with-alternative-medicine-composition_23-2150413044.jpg?t=st=1731829552~exp=1731833152~hmac=0a0d9788f2455a5c7da4dbb6e6c5ec88311d6be032a6b3a3d944a5e97638d325&w=996"
+       
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
       />
       <div
         aria-hidden="true"
@@ -69,7 +71,7 @@ const OurGoals = () => {
           </dl>
         </div>
       </div>
-    </div>
+     </div>
   )
 }
 

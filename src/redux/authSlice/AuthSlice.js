@@ -39,6 +39,13 @@ export const profile=createAsyncThunk("auth/profile",async ()=>{
     }
 )
 
+//Update Profile
+export const updateProfile=createAsyncThunk("auth/updateProfile",async(newData)=>{
+    const res=await axiosInstance.put(`${api}/${newData?.id}`,newData?.updtData)
+    console.log("axios res for profile:",res);
+    return res?.data
+}
+)
 
 const initialValue={
     isLoading:false,
@@ -105,6 +112,25 @@ export const authSlice=createSlice({
          })
          builder.addCase(profile.rejected,(state,action)=>{
             console.log("profile,action for rejected state:",action)
+              state.error=action.error.message
+         })
+
+         //Update Profile reducer
+        builder.addCase(updateProfile.pending,(state,action)=>{
+            console.log("update profile,action for pending state:",action)
+            state.isLoading=true
+         })
+         builder.addCase(updateProfile.fulfilled,(state,action)=>{
+            console.log("update profile,action for fulfilled state:",action)
+            // if(action.payload.status===200){
+            state.isLoading=false
+            state.userValue=action.payload.data
+            console.log("uservalue",state.userValue)
+            state.error=null
+        // }
+         })
+         builder.addCase(updateProfile.rejected,(state,action)=>{
+            console.log("update  jprofile,action for rejected state:",action)
               state.error=action.error.message
          })
     }

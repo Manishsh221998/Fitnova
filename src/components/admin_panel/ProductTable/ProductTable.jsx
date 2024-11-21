@@ -175,15 +175,15 @@ let found = state.find((x) => x.id == id);
         sx={{ marginTop: 2, borderRadius: 3, boxShadow: 3, border:1,borderColor:'silver' }}
       >
         <Table>
-          <TableHead>
-            <TableRow sx={{ background: "#F5EFFF" }}>
-            <TableCell sx={{paddingLeft:'2rem'}}>List</TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell>Brand</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Weight</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell align="center">Actions</TableCell>
+          <TableHead >
+            <TableRow sx={{ background: "#F5EFFF", }}>
+            <TableCell sx={{paddingLeft:'2rem',fontWeight:600}}>List</TableCell>
+              <TableCell sx={{fontWeight:600}}>Image</TableCell>
+              <TableCell sx={{fontWeight:600}}>Brand</TableCell>
+              <TableCell sx={{fontWeight:600}}>Category</TableCell>
+              <TableCell sx={{fontWeight:600}}>Weight(Kg)</TableCell>
+              <TableCell sx={{fontWeight:600}}>(₹)Price</TableCell>
+              <TableCell sx={{fontWeight:600}} align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -398,7 +398,7 @@ let found = state.find((x) => x.id == id);
                                     >
                                       Weight:{" "}
                                       <span style={{ fontWeight: 500 }}>
-                                        {product?.Weight}
+                                        {product?.weight}
                                       </span>
                                     </Typography>
 

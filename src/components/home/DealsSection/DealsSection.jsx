@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Card, CardContent, Typography, Box, Divider } from '@mui/material';
-
+ 
 const deals = [
   {
     backgroundColor: '#FBFBFB',
@@ -37,6 +37,7 @@ const deals = [
 ];
 
 const DealsSection = () => {
+ 
   return (
     <Box sx={{ p:4,borderRadius:2,boxShadow:2,m:1 }}>
       <Typography sx={{textAlign:'start',fontSize:"2rem",background: 'linear-gradient(95deg, #32E0C4, #54E346)',
@@ -67,7 +68,7 @@ const DealsSection = () => {
                   </Typography>
                 )}
                 {deal.discount && (
-                  <Typography variant="body2" sx={{ textDecoration: 'line-through', mb: 1 }}>
+                  <Typography sx={{fontSize:'14px', textDecoration: 'line-through', mb: 1,color:'GrayText' }}>
                     {deal.discount}
                   </Typography>
                 )}
@@ -81,10 +82,16 @@ const DealsSection = () => {
                   sx={{ maxWidth: '55%', maxHeight: 210,
                      opacity:1, // Adjust opacity for blending effect
                     mixBlendMode: "multiply", // Blend effect with the background gradient
+                
+                       "&:hover": { 
+                      transform: "rotate(-15deg)",  
+  transition: "transform 0.5s ease"},
+                    
                       }}
                 />
               </CardContent>
             </Card>
+ 
           </Grid>
         ))}
       </Grid>

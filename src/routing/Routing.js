@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Page_not_found from "../PNF/Page_not_found"
 import Header from "../layout/header/Header"
-import Footer from "../layout/footer/Footer"
-import Login from "../components/form/log/Login"
+ import Login from "../components/form/log/Login"
 import Registration from "../components/form/rege/Registration"
 import Profile from "../components/form/profile/Profile"
 import Home from "../components/home/Home"
@@ -23,6 +22,7 @@ import { Box } from "@mui/material"
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import {ProtectedRouteForAdmin, ProtectedRoutes} from "../protectedRoute/ProtectedRouting"
 import ErrorPage from "../protectedRoute/errorPage/ErrorPage"
+import OurTeam from "../components/About/OurTeam/OurTeam"
  
 const Routing = () => {
   
@@ -38,7 +38,7 @@ const Routing = () => {
             <Route path="brands" element={<OurBrands />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact_us />} />
-        
+         
             <Route path="product" element={<Product />} />
             <Route path="product/singleProduct/:id" element={<SingleProduct />} />
 

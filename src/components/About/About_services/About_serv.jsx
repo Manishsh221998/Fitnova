@@ -19,7 +19,7 @@ const AboutUs = () => {
 
     <Container maxWidth="lg">
       {/* Hero Section */}
-      <Container maxWidth="lg" style={{ padding: "2rem" }}>
+      <Container maxWidth="lg" style={{ padding: "2rem",marginTop:"3rem" }}>
         <Typography variant="h4" align="center" gutterBottom>
           <Divider sx={{fontWeight:'600'}}>About Us</Divider>
         </Typography>

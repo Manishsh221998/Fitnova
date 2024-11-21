@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, Grid } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Grid, Divider } from '@mui/material';
 
 export default function BMICalculator() {
   const [height, setHeight] = useState('');
@@ -13,11 +13,15 @@ export default function BMICalculator() {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 5 }}>
-      <Typography variant="h4" align="center" gutterBottom>
-        BMI Calculator
+    <Container maxWidth="md" sx={{borderRadius:2,boxShadow:2,p:3}}>
+   {/* <Typography sx={{textAlign:'start',fontSize:"2rem",background: 'linear-gradient(95deg, #32E0C4, #54E346)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',fontWeight:'bold'}} gutterBottom>
+       Calculate your BMI
       </Typography>
-      <Box component="form" noValidate autoComplete="off">
+      <Divider sx={{marginBottom:3}}/> */}
+
+      <Box component="form" noValidate autoComplete="off" >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -42,9 +46,9 @@ export default function BMICalculator() {
           <Grid item xs={12}>
             <Button
               variant="contained"
-              color="primary"
-              fullWidth
+               fullWidth
               onClick={calculateBMI}
+              sx={{bgcolor:'black',color:'white'}}
             >
               Calculate BMI
             </Button>
